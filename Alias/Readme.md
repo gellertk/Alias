@@ -1,0 +1,4 @@
+
+# Alias game
+
+* Test readme
