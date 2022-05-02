@@ -42,6 +42,7 @@
 		CBDC0E54281FBCAE00F5476B = {
 			isa = PBXGroup;
 			children = (
+				CBDC0E74281FC1F900F5476B /* Readme.md */,
 				CBDC0E5F281FBCAE00F5476B /* Alias */,
 				CBDC0E5E281FBCAE00F5476B /* Products */,
 			);
@@ -65,7 +66,6 @@
 				CBDC0E69281FBCB000F5476B /* Assets.xcassets */,
 				CBDC0E6B281FBCB000F5476B /* LaunchScreen.storyboard */,
 				CBDC0E6E281FBCB000F5476B /* Info.plist */,
-				CBDC0E74281FC1F900F5476B /* Readme.md */,
 			);
 			path = Alias;
 			sourceTree = "<group>";
