@@ -15,4 +15,14 @@ struct K {
         static let cardBackground: UIColor = .init(red: 239, green: 239, blue: 239)
     }
     
+    struct Numeric {
+        static let defaultCornerRadius: CGFloat = 10
+        static let categoriesItemsPerRow: CGFloat = 2
+
+    }
+    
+    struct EdgeInset {
+        static let categoriesSectionInserts = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    }
+    
 }
