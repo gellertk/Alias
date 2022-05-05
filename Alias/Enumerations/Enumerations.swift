@@ -12,4 +12,9 @@ enum ShrinkDirection {
     case down
 }
 
+enum CommonButtonType: String {
+    case newGame = "Начать новую игру"
+    case continueGame = "Продолжить"
+}
+
 
