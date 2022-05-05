@@ -38,7 +38,7 @@ private extension CategoriesViewController {
 extension CategoriesViewController: CategoriesViewDelegate {
     
     func didTapContinueButton() {
-        
+        navigationController?.pushViewController(FinishViewController(score: 0), animated: true)
     }
     
 }

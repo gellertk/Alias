@@ -7,7 +7,9 @@
 
 import UIKit
 
-class ContinueButton: UIButton {
+class CommonButton: UIButton {
+    
+    private let type: CommonButtonType?
     
     override var isEnabled: Bool {
         didSet {
@@ -29,8 +31,9 @@ class ContinueButton: UIButton {
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(type: CommonButtonType) {
+        self.type = type
+        super.init(frame: .zero)
         setupView()
     }
     
@@ -40,15 +43,20 @@ class ContinueButton: UIButton {
     
 }
 
-private extension ContinueButton {
+private extension CommonButton {
     
     func setupView() {
-        setTitle("Продолжить", for: .normal)
+        setTitle(type?.rawValue, for: .normal)
         titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
         backgroundColor = K.Color.secondaryInterfaceBackground
         layer.cornerRadius = K.Numeric.defaultCornerRadius
-        isEnabled = false
         addShadow()
+        setupConstraints()
+        isEnabled = type != .continueGame
+    }
+    
+    func setupConstraints() {
+        heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
 }
