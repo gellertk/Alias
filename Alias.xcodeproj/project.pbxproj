@@ -108,15 +108,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		CB44B1BD28217AC800C6CE0F /* Enumerations */ = {
-			isa = PBXGroup;
-			children = (
-				CB44B1B42821630600C6CE0F /* Enumerations.swift */,
-			);
-			name = Enumerations;
-			path = ..;
-			sourceTree = "<group>";
-		};
 		CB44B1C028217B6B00C6CE0F /* ControllerManagers */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +139,14 @@
 				CBB5A97F2823C96300CB718D /* NetworkManager.swift */,
 			);
 			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		CBB5A9842823E66700CB718D /* Enumerations */ = {
+			isa = PBXGroup;
+			children = (
+				CB44B1B42821630600C6CE0F /* Enumerations.swift */,
+			);
+			path = Enumerations;
 			sourceTree = "<group>";
 		};
 		CBC5BD0128201E1F003832B7 /* Extensions */ = {
@@ -207,10 +206,10 @@
 		CBDC0E5F281FBCAE00F5476B /* Alias */ = {
 			isa = PBXGroup;
 			children = (
-				CBB5A9812823C96800CB718D /* NetworkManager */,
+				CBB5A9842823E66700CB718D /* Enumerations */,
 				CBC5BD022820202A003832B7 /* Constants */,
-				CB44B1BD28217AC800C6CE0F /* Enumerations */,
 				CB44B1BC28217ABA00C6CE0F /* Models */,
+				CBB5A9812823C96800CB718D /* NetworkManager */,
 				CBD2236B2821890F0085B6E6 /* CommonViews */,
 				CBB5A9792823C45B00CB718D /* MainMenu */,
 				5E99154F2822F1CF0002BA0E /* Rules */,
