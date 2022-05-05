@@ -17,3 +17,4 @@ enum CommonButtonType: String {
     case continueGame = "Продолжить"
 }
 
+
