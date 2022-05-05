@@ -7,7 +7,7 @@
 
 import UIKit
 
-let gameVC = GameViewController()
+let gameVC = GameViewController(oldGame: GameBrain())
 
 class CircularProgressBarView: UIView {
     

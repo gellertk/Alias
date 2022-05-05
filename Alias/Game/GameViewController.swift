@@ -8,6 +8,17 @@
 import UIKit
 
 class GameViewController: UIViewController {
+    var game: GameBrain
+    
+    init(oldGame: GameBrain) {
+        self.game = oldGame
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     private let cardLabel: UILabel = {
         let label = UILabel()
@@ -114,6 +125,7 @@ class GameViewController: UIViewController {
         setConstraints()
         timerLabel.text = "\(durationTimer)"
         startTimer()
+        cardLabel.text = game.getNextCard()
     }
     
     @objc func resetGameButtonPressed() {
@@ -192,7 +204,7 @@ struct AuthenticationViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let viewController = GameViewController()
+        let viewController = GameViewController(oldGame: GameBrain())
         
         func makeUIViewController(context: UIViewControllerRepresentableContext<AuthenticationViewControllerProvider.ContainerView>) -> GameViewController {
             return viewController

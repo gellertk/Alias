@@ -8,8 +8,9 @@
 import UIKit
 
 class CategoriesViewController: UIViewController {
-        
-    private var categories = Category.getCategories()
+    private var game = GameBrain()
+    
+    var categories: [Category] = []
     
     private let categoryView = CategoriesView()
     
@@ -19,6 +20,7 @@ class CategoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        categories = game.getCategories()
         setupDelegates()
         setCustomTitle(text: "ВЫБЕРИТЕ КАТЕГОРИИ СЛОВ")
     }
@@ -38,9 +40,10 @@ private extension CategoriesViewController {
 extension CategoriesViewController: CategoriesViewDelegate {
     
     func didTapContinueButton() {
-        
+        // Переход с CategoriesViewController на GameViewController с существующим экземпляром игровой логики
+        let nextViewController = GameViewController(oldGame: self.game)
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
-    
 }
 
 extension CategoriesViewController: UICollectionViewDelegate {
