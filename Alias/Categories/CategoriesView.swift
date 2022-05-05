@@ -16,10 +16,8 @@ class CategoriesView: UIView {
     weak var delegate: CategoriesViewDelegate?
     
     lazy var categoriesCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionHeadersPinToVisibleBounds = true
         let collectionView = UICollectionView(frame: .zero,
-                                              collectionViewLayout: layout)
+                                              collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.register(CategoriesCollectionViewCell.self,
                                 forCellWithReuseIdentifier: CategoriesCollectionViewCell.reuseId)
         collectionView.backgroundColor = .white
@@ -30,8 +28,8 @@ class CategoriesView: UIView {
         return collectionView
     }()
     
-    private lazy var continueButton: ContinueButton = {
-        let button = ContinueButton()
+    private lazy var continueButton: CommonButton = {
+        let button = CommonButton(type: .continueGame)
         button.addTarget(self, action: #selector(didTapContinueButton), for: .touchUpInside)
         
         return button
@@ -72,7 +70,6 @@ private extension CategoriesView {
             continueButton.trailingAnchor.constraint(equalTo: categoriesCollectionView.trailingAnchor),
             continueButton.leadingAnchor.constraint(equalTo: categoriesCollectionView.leadingAnchor),
             continueButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            continueButton.heightAnchor.constraint(equalToConstant: 80),
             
             categoriesCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             categoriesCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
@@ -84,20 +81,20 @@ private extension CategoriesView {
 }
 
 //MARK: - SwiftUI
-import SwiftUI
-struct CompostitionalProvider: PreviewProvider {
-    static var previews: some View {
-        ContainterView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainterView: UIViewControllerRepresentable {
-        
-        let tabBar = CategoriesViewController()
-        func makeUIViewController(context: UIViewControllerRepresentableContext<CompostitionalProvider.ContainterView>) -> CategoriesViewController {
-            return tabBar
-        }
-        
-        func updateUIViewController(_ uiViewController: CompostitionalProvider.ContainterView.UIViewControllerType, context: UIViewControllerRepresentableContext<CompostitionalProvider.ContainterView>) {
-        }
-    }
-}
+//import SwiftUI
+//struct CompostitionalProvider: PreviewProvider {
+//    static var previews: some View {
+//        ContainterView().edgesIgnoringSafeArea(.all)
+//    }
+//
+//    struct ContainterView: UIViewControllerRepresentable {
+//
+//        let tabBar = CategoriesViewController()
+//        func makeUIViewController(context: UIViewControllerRepresentableContext<CompostitionalProvider.ContainterView>) -> CategoriesViewController {
+//            return tabBar
+//        }
+//
+//        func updateUIViewController(_ uiViewController: CompostitionalProvider.ContainterView.UIViewControllerType, context: UIViewControllerRepresentableContext<CompostitionalProvider.ContainterView>) {
+//        }
+//    }
+//}

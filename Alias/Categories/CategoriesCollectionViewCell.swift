@@ -32,7 +32,7 @@ class CategoriesCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         let config = UIImage.SymbolConfiguration(pointSize: 30)
         imageView.image = UIImage(systemName: "checkmark.circle.fill", withConfiguration: config)
-        imageView.tintColor = K.Color.primaryInterfaceBackground
+        imageView.tintColor = K.Color.secondaryInterfaceBackground
         imageView.isHidden = true
         
         return imageView
