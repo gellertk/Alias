@@ -7,19 +7,7 @@
 
 import UIKit
 
-class GameViewController: UIViewController {
-    var game: GameBrain
-    
-    init(oldGame: GameBrain) {
-        self.game = oldGame
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
+class GameViewController: UIViewController, CircularProgressBarViewDelegate, GameBrainDelegate {
     private let cardLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = K.Color.cardBackground
@@ -45,11 +33,10 @@ class GameViewController: UIViewController {
     
     private let circularProgressBar: CircularProgressBarView = {
         let progressBar = CircularProgressBarView()
-//        progressBar.translatesAutoresizingMaskIntoConstraints = false
         
         return progressBar
     }()
-    
+ 
     private let timerLabel: UILabel = {
         let label = UILabel()
         label.text = ""
@@ -113,19 +100,27 @@ class GameViewController: UIViewController {
         
         return stackView
     }()
-    
-    var timer = Timer()
-    
-    var durationTimer = 60
-        
+                
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = K.Color.primaryInterfaceBackground
         setupView()
         setConstraints()
-        timerLabel.text = "\(durationTimer)"
-        startTimer()
         cardLabel.text = game.getNextCard()
+        circularProgressBar.delegate = self
+        game.delegate = self
+        circularProgressBar.startTimer()
+        game.startGame()
+    }
+    
+    // CircularProgressBarViewDelegate
+    func didChangeDuration(duration: UInt) {
+        timerLabel.text = "\(duration)"
+    }
+    
+    // CircularProgressBarViewDelegate
+    func timerIsOver() {
+        print("timer is over!")
     }
     
     @objc func resetGameButtonPressed() {
@@ -140,19 +135,19 @@ class GameViewController: UIViewController {
         print("correctWordButtonPressed")
     }
     
-    func startTimer() {
-        circularProgressBar.circleAnimation()
-        
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+    // GameBrainDelegate
+    func didScoreChanged(currentScore: Int) {
+        print("didScoreChanged", currentScore)
     }
     
-    @objc func timerAction() {
-        durationTimer -= 1
-        timerLabel.text = "\(durationTimer)"
-        
-        if durationTimer == 0 {
-            timer.invalidate()
-        }
+    // GameBrainDelegate
+    func didCardChanged(currentCard: String) {
+        print("didCardChanged", currentCard)
+    }
+    
+    // GameBrainDelegate
+    func gameOver() {
+        print("gameOver")
     }
     
     // MARK: - setup View
@@ -204,7 +199,7 @@ struct AuthenticationViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let viewController = GameViewController(oldGame: GameBrain())
+        let viewController = GameViewController()
         
         func makeUIViewController(context: UIViewControllerRepresentableContext<AuthenticationViewControllerProvider.ContainerView>) -> GameViewController {
             return viewController

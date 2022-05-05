@@ -7,12 +7,17 @@
 
 import UIKit
 
-let gameVC = GameViewController(oldGame: GameBrain())
+protocol CircularProgressBarViewDelegate {
+    func didChangeDuration(duration: UInt)
+    func timerIsOver()
+}
 
 class CircularProgressBarView: UIView {
-    
     private var progressLayer = CAShapeLayer()
     private var circleLayer = CAShapeLayer()
+    private var timer = Timer()
+    var duration: UInt = 60
+    var delegate: CircularProgressBarViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,9 +74,26 @@ class CircularProgressBarView: UIView {
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         
         basicAnimation.toValue = 0
-        basicAnimation.duration = CFTimeInterval(gameVC.durationTimer)
+        basicAnimation.duration = CFTimeInterval(self.duration)
         basicAnimation.fillMode = .forwards
         basicAnimation.isRemovedOnCompletion = true
         progressLayer.add(basicAnimation, forKey: "progressAnimation")
+    }
+    
+    func startTimer() {
+        self.delegate?.didChangeDuration(duration: self.duration)
+        self.circleAnimation()
+        
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+    }
+    
+    @objc func timerAction() {
+        self.duration -= 1
+        self.delegate?.didChangeDuration(duration: self.duration)
+        
+        if self.duration == 0 {
+            timer.invalidate()
+            self.delegate?.timerIsOver()
+        }
     }
 }

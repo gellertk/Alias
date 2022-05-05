@@ -11,10 +11,10 @@ struct Category {
     
     let title: String
     let imageName: String?
-    let cards: [Card]
+    let cards: [String]
     var isSelected: Bool
     
-    init(title: String, image: String?, cards: [Card]) {
+    init(title: String, image: String?, cards: [String]) {
         self.title = title
         self.imageName = image
         self.cards = cards

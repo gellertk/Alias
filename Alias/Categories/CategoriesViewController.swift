@@ -8,7 +8,6 @@
 import UIKit
 
 class CategoriesViewController: UIViewController {
-    private var game = GameBrain()
     
     var categories: [Category] = []
     
@@ -40,8 +39,8 @@ private extension CategoriesViewController {
 extension CategoriesViewController: CategoriesViewDelegate {
     
     func didTapContinueButton() {
-        // Переход с CategoriesViewController на GameViewController с существующим экземпляром игровой логики
-        let nextViewController = GameViewController(oldGame: self.game)
+        // Переход с CategoriesViewController на GameViewController
+        let nextViewController = GameViewController()
         navigationController?.pushViewController(nextViewController, animated: true)
     }
 }
