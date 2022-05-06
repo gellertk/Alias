@@ -58,53 +58,90 @@ var game = GameBrain()
 protocol GameBrainDelegate {
     func didScoreChanged(currentScore: Int)
     func didCardChanged(currentCard: String)
-    func gameOver()
+    func gameOver(currentScore: Int)
 }
 
 struct GameBrain {
     var delegate: GameBrainDelegate?
     private var isLastCard = false
+    private var currentScore = 0
+    private var showedCards: [String : Bool] = [:]
+    private var selectedCategories: [Category] = []
+    private var currentRound = 0
     
-     func getCategories() -> [Category] {
+    func getCategories() -> [Category] {
         return categoriesList
     }
     
-    // TODO: DELETE так как переходит на делегат
-    func getNextCard() -> String? {
-        return categoriesList[0].cards[0]
+    mutating func setSelectedCategories(selectedCategories: [Category]) {
+        self.selectedCategories = selectedCategories
     }
     
     mutating func startGame() {
         self.isLastCard = false
+        self.currentScore = 0
+        
+        // Через 4 раунда словарь с показанными карточками очищается
+        if currentRound >= 4 {
+            resetGame()
+        }
+        
+        self.currentRound += 1
+        
+        updateStates()
+    }
+    
+    mutating func resetGame() {
+        self.showedCards = [:]
+        self.currentRound = 0
     }
     
     mutating func lastCard() {
         self.isLastCard = true
     }
     
-    func correctCard(card: String) {
+    mutating func correctCard(card: String) {
         self.cardIsShowed(card: card, isSolved: true)
     }
     
-    func skipCard(card: String) {
+    mutating func skipCard(card: String) {
         self.cardIsShowed(card: card, isSolved: false)
     }
     
-    private func cardIsShowed(card: String, isSolved: Bool) {
+    private mutating func cardIsShowed(card: String, isSolved: Bool) {
         if isSolved {
-            // очки +1
+            self.currentScore += 1
         } else {
-            // очки -1
+            self.currentScore -= 1
         }
         
-        // TODO: создать модель Card и записать её в показанные карточки
+        self.showedCards[card] = true
         
-        self.delegate?.didScoreChanged(currentScore: 0)
+        updateStates()
+    }
+    
+    private func updateStates() {
+        self.delegate?.didScoreChanged(currentScore: self.currentScore)
         
         if self.isLastCard {
-            self.delegate?.gameOver()
-        } else {
-            self.delegate?.didCardChanged(currentCard: "")
+            self.delegate?.gameOver(currentScore: self.currentScore)
+            return
         }
+        
+        var nextCard = ""
+        
+        // N попыток достать случайную карту, с проверкой, что случайной карты не было ранее
+        // После N попвток будет показана последняя случайная карта
+        for _ in 0...10 {
+            let possebleNextCard = selectedCategories.randomElement()?.cards.randomElement()
+            nextCard = possebleNextCard ?? ""
+            
+            // Если значения нет, то это уникальная карточка
+            if self.showedCards[nextCard] == nil {
+                break
+            }
+        }
+        
+        self.delegate?.didCardChanged(currentCard: nextCard)
     }
 }

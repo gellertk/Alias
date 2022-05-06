@@ -39,6 +39,17 @@ private extension CategoriesViewController {
 extension CategoriesViewController: CategoriesViewDelegate {
     
     func didTapContinueButton() {
+        // Сбор списка выбранных категорий
+        var selectedCategories: [Category] = []
+        
+        for category in categories {
+            if category.isSelected {
+                selectedCategories.append(category)
+            }
+        }
+
+        game.setSelectedCategories(selectedCategories: selectedCategories)
+        
         // Переход с CategoriesViewController на GameViewController
         let nextViewController = GameViewController()
         navigationController?.pushViewController(nextViewController, animated: true)

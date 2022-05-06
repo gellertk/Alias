@@ -13,7 +13,7 @@ class GameViewController: UIViewController, CircularProgressBarViewDelegate, Gam
         label.backgroundColor = K.Color.cardBackground
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 20
-        label.text = "КАРТОЧКА"
+        label.text = ""
         label.font = .boldSystemFont(ofSize: 30)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -23,7 +23,7 @@ class GameViewController: UIViewController, CircularProgressBarViewDelegate, Gam
     
     private let currentScoreLabel: UILabel = {
         let label = UILabel()
-        label.text = "Очки: 0"
+        label.text = "Очки:"
         label.font = .boldSystemFont(ofSize: 20)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -31,11 +31,7 @@ class GameViewController: UIViewController, CircularProgressBarViewDelegate, Gam
         return label
     }()
     
-    private let circularProgressBar: CircularProgressBarView = {
-        let progressBar = CircularProgressBarView()
-        
-        return progressBar
-    }()
+    private let circularProgressBar = CircularProgressBarView()
  
     private let timerLabel: UILabel = {
         let label = UILabel()
@@ -47,11 +43,10 @@ class GameViewController: UIViewController, CircularProgressBarViewDelegate, Gam
         return label
     }()
     
-    private let resetGameButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = K.Color.secondaryButtonColor
+    private let resetGameButton: CommonButton = {
+        let button = CommonButton(type: .resetGame)
+        button.backgroundColor = K.Color.secondaryButton
         button.layer.cornerRadius = 10
-        button.setTitle("Сброс", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(resetGameButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -59,11 +54,10 @@ class GameViewController: UIViewController, CircularProgressBarViewDelegate, Gam
         return button
     }()
     
-    private let correctWordButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = K.Color.correctButtonColor
+    private let correctWordButton: CommonButton = {
+        let button = CommonButton(type: .correctCard)
+        button.backgroundColor = K.Color.correctButton
         button.layer.cornerRadius = 10
-        button.setTitle("✔︎", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 30)
         button.addTarget(self, action: #selector(correctWordButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -71,11 +65,10 @@ class GameViewController: UIViewController, CircularProgressBarViewDelegate, Gam
         return button
     }()
     
-    private let skipWordButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = K.Color.skipButtonColor
+    private let skipWordButton: CommonButton = {
+        let button = CommonButton(type: .skipCard)
+        button.backgroundColor = K.Color.skipButton
         button.layer.cornerRadius = 10
-        button.setTitle("▶︎▶︎", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 30)
         button.addTarget(self, action: #selector(skipWordButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -106,7 +99,6 @@ class GameViewController: UIViewController, CircularProgressBarViewDelegate, Gam
         view.backgroundColor = K.Color.primaryInterfaceBackground
         setupView()
         setConstraints()
-        cardLabel.text = game.getNextCard()
         circularProgressBar.delegate = self
         game.delegate = self
         circularProgressBar.startTimer()
@@ -120,34 +112,41 @@ class GameViewController: UIViewController, CircularProgressBarViewDelegate, Gam
     
     // CircularProgressBarViewDelegate
     func timerIsOver() {
-        print("timer is over!")
+        game.lastCard()
     }
     
     @objc func resetGameButtonPressed() {
-        print("resetGameButtonPressed")
+        circularProgressBar.stopTimer()
+        game.resetGame()
+        
+        // Переход с GameViewController на MainMenuViewController
+        let nextViewController = MainMenuViewController()
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
     
     @objc func skipWordButtonPressed() {
-        print("skipWordButtonPressed")
+        game.skipCard(card: cardLabel.text ?? "")
     }
     
     @objc func correctWordButtonPressed() {
-        print("correctWordButtonPressed")
+        game.correctCard(card: cardLabel.text ?? "")
     }
     
     // GameBrainDelegate
     func didScoreChanged(currentScore: Int) {
-        print("didScoreChanged", currentScore)
+        currentScoreLabel.text = "Очки: \(currentScore)"
     }
     
     // GameBrainDelegate
     func didCardChanged(currentCard: String) {
-        print("didCardChanged", currentCard)
+        cardLabel.text = currentCard
     }
     
     // GameBrainDelegate
-    func gameOver() {
-        print("gameOver")
+    func gameOver(currentScore: Int) {
+        // Переход с GameViewController на FinishViewController
+        let nextViewController = FinishViewController(score: currentScore)
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
     
     // MARK: - setup View

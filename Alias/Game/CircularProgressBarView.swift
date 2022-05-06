@@ -80,6 +80,10 @@ class CircularProgressBarView: UIView {
         progressLayer.add(basicAnimation, forKey: "progressAnimation")
     }
     
+    func stopTimer() {
+        timer.invalidate()
+    }
+    
     func startTimer() {
         self.delegate?.didChangeDuration(duration: self.duration)
         self.circleAnimation()

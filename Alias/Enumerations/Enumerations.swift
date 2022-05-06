@@ -13,8 +13,9 @@ enum ShrinkDirection {
 }
 
 enum CommonButtonType: String {
-    case newGame = "Начать новую игру"
+    case newGame = "Начать новый раунд"
     case continueGame = "Продолжить"
+    case skipCard = ">>"
+    case correctCard = "✔︎"
+    case resetGame = "Сброс"
 }
-
-
