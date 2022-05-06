@@ -7,14 +7,13 @@
 
 import UIKit
 
-class GameViewController: UIViewController {
-    
+class GameViewController: UIViewController, CircularProgressBarViewDelegate, GameBrainDelegate {
     private let cardLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = K.Color.cardBackground
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 20
-        label.text = "КАРТОЧКА"
+        label.text = ""
         label.font = .boldSystemFont(ofSize: 30)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -24,7 +23,7 @@ class GameViewController: UIViewController {
     
     private let currentScoreLabel: UILabel = {
         let label = UILabel()
-        label.text = "Очки: 0"
+        label.text = "Очки:"
         label.font = .boldSystemFont(ofSize: 20)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -32,13 +31,8 @@ class GameViewController: UIViewController {
         return label
     }()
     
-    private let circularProgressBar: CircularProgressBarView = {
-        let progressBar = CircularProgressBarView()
-//        progressBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        return progressBar
-    }()
-    
+    private let circularProgressBar = CircularProgressBarView()
+ 
     private let timerLabel: UILabel = {
         let label = UILabel()
         label.text = ""
@@ -49,11 +43,10 @@ class GameViewController: UIViewController {
         return label
     }()
     
-    private let resetGameButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = K.Color.secondaryButtonColor
+    private let resetGameButton: CommonButton = {
+        let button = CommonButton(type: .resetGame)
+        button.backgroundColor = K.Color.secondaryButton
         button.layer.cornerRadius = 10
-        button.setTitle("Сброс", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(resetGameButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -61,11 +54,10 @@ class GameViewController: UIViewController {
         return button
     }()
     
-    private let correctWordButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = K.Color.correctButtonColor
+    private let correctWordButton: CommonButton = {
+        let button = CommonButton(type: .correctCard)
+        button.backgroundColor = K.Color.correctButton
         button.layer.cornerRadius = 10
-        button.setTitle("✔︎", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 30)
         button.addTarget(self, action: #selector(correctWordButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -73,11 +65,10 @@ class GameViewController: UIViewController {
         return button
     }()
     
-    private let skipWordButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = K.Color.skipButtonColor
+    private let skipWordButton: CommonButton = {
+        let button = CommonButton(type: .skipCard)
+        button.backgroundColor = K.Color.skipButton
         button.layer.cornerRadius = 10
-        button.setTitle("▶︎▶︎", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 30)
         button.addTarget(self, action: #selector(skipWordButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -102,45 +93,60 @@ class GameViewController: UIViewController {
         
         return stackView
     }()
-    
-    var timer = Timer()
-    
-    var durationTimer = 60
-        
+                
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = K.Color.primaryInterfaceBackground
         setupView()
         setConstraints()
-        timerLabel.text = "\(durationTimer)"
-        startTimer()
+        circularProgressBar.delegate = self
+        game.delegate = self
+        circularProgressBar.startTimer()
+        game.startGame()
+    }
+    
+    // CircularProgressBarViewDelegate
+    func didChangeDuration(duration: UInt) {
+        timerLabel.text = "\(duration)"
+    }
+    
+    // CircularProgressBarViewDelegate
+    func timerIsOver() {
+        game.lastCard()
     }
     
     @objc func resetGameButtonPressed() {
-        print("resetGameButtonPressed")
+        circularProgressBar.stopTimer()
+        game.resetGame()
+        
+        // Переход с GameViewController на MainMenuViewController
+        let nextViewController = MainMenuViewController()
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
     
     @objc func skipWordButtonPressed() {
-        print("skipWordButtonPressed")
+        game.skipCard(card: cardLabel.text ?? "")
     }
     
     @objc func correctWordButtonPressed() {
-        print("correctWordButtonPressed")
+        game.correctCard(card: cardLabel.text ?? "")
     }
     
-    func startTimer() {
-        circularProgressBar.circleAnimation()
-        
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+    // GameBrainDelegate
+    func didScoreChanged(currentScore: Int) {
+        currentScoreLabel.text = "Очки: \(currentScore)"
     }
     
-    @objc func timerAction() {
-        durationTimer -= 1
-        timerLabel.text = "\(durationTimer)"
-        
-        if durationTimer == 0 {
-            timer.invalidate()
-        }
+    // GameBrainDelegate
+    func didCardChanged(currentCard: String) {
+        cardLabel.text = currentCard
+    }
+    
+    // GameBrainDelegate
+    func gameOver(currentScore: Int) {
+        // Переход с GameViewController на FinishViewController
+        let nextViewController = FinishViewController(score: currentScore)
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
     
     // MARK: - setup View

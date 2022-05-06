@@ -8,8 +8,8 @@
 import UIKit
 
 class CategoriesViewController: UIViewController {
-        
-    private var categories = Category.getCategories()
+    
+    var categories: [Category] = []
     
     private let categoryView = CategoriesView()
     
@@ -19,6 +19,7 @@ class CategoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        categories = game.getCategories()
         setupDelegates()
         setCustomTitle(text: "ВЫБЕРИТЕ КАТЕГОРИИ СЛОВ")
     }
@@ -38,9 +39,21 @@ private extension CategoriesViewController {
 extension CategoriesViewController: CategoriesViewDelegate {
     
     func didTapContinueButton() {
-        navigationController?.pushViewController(FinishViewController(score: 0), animated: true)
+        // Сбор списка выбранных категорий
+        var selectedCategories: [Category] = []
+        
+        for category in categories {
+            if category.isSelected {
+                selectedCategories.append(category)
+            }
+        }
+
+        game.setSelectedCategories(selectedCategories: selectedCategories)
+        
+        // Переход с CategoriesViewController на GameViewController
+        let nextViewController = GameViewController()
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
-    
 }
 
 extension CategoriesViewController: UICollectionViewDelegate {
