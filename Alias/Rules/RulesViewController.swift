@@ -8,7 +8,7 @@
 import UIKit
 
 
-class ViewController: UIViewController {
+class RulesViewController: UIViewController {
     
 
     let scrollView: UIScrollView = {
@@ -84,7 +84,6 @@ class ViewController: UIViewController {
         view.padding = UIEdgeInsets(top: 8, left: 15, bottom: 0, right: 15)
         view.font = .boldSystemFont(ofSize: 22)
         view.text = "Начисление очков"
-        
         return view
     }()
     

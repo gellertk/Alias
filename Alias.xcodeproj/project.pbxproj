@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E8AB8E828258CE2000D08A1 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8AB8E728258CE2000D08A1 /* Sounds.swift */; };
+		5E8AB8EA28258D01000D08A1 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 5E8AB8E928258D01000D08A1 /* Sounds */; };
 		5E9915512822F1EE0002BA0E /* RulesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9915502822F1EE0002BA0E /* RulesViewController.swift */; };
 		5E9915532822F23C0002BA0E /* LabelPaddings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9915522822F23C0002BA0E /* LabelPaddings.swift */; };
 		CB44B1A82821154600C6CE0F /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB44B1A72821154500C6CE0F /* CategoriesViewController.swift */; };
@@ -37,6 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E8AB8E728258CE2000D08A1 /* Sounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
+		5E8AB8E928258D01000D08A1 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = ../../Sounds; sourceTree = "<group>"; };
 		5E9915502822F1EE0002BA0E /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesViewController.swift; sourceTree = "<group>"; };
 		5E9915522822F23C0002BA0E /* LabelPaddings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPaddings.swift; sourceTree = "<group>"; };
 		CB44B1A72821154500C6CE0F /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +83,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E8AB8E628258CD2000D08A1 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				5E8AB8E728258CE2000D08A1 /* Sounds.swift */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		5E99154F2822F1CF0002BA0E /* Rules */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +218,7 @@
 		CBDC0E5F281FBCAE00F5476B /* Alias */ = {
 			isa = PBXGroup;
 			children = (
+				5E8AB8E628258CD2000D08A1 /* Sounds */,
 				CBA195032823E7C800771098 /* Enumerations */,
 				CBB5A9812823C96800CB718D /* NetworkManager */,
 				CBC5BD022820202A003832B7 /* Constants */,
@@ -221,6 +234,7 @@
 				CBDC0E6B281FBCB000F5476B /* LaunchScreen.storyboard */,
 				CBDC0E69281FBCB000F5476B /* Assets.xcassets */,
 				CBDC0E6E281FBCB000F5476B /* Info.plist */,
+				5E8AB8E928258D01000D08A1 /* Sounds */,
 			);
 			path = Alias;
 			sourceTree = "<group>";
@@ -294,6 +308,7 @@
 			files = (
 				CBDC0E6D281FBCB000F5476B /* LaunchScreen.storyboard in Resources */,
 				CBDC0E6A281FBCB000F5476B /* Assets.xcassets in Resources */,
+				5E8AB8EA28258D01000D08A1 /* Sounds in Resources */,
 				CBDC0E75281FC1F900F5476B /* Readme.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,6 +327,7 @@
 				5E9915532822F23C0002BA0E /* LabelPaddings.swift in Sources */,
 				5E9915512822F1EE0002BA0E /* RulesViewController.swift in Sources */,
 				F0A720342822A2B500FCE055 /* GameViewController.swift in Sources */,
+				5E8AB8E828258CE2000D08A1 /* Sounds.swift in Sources */,
 				CBDC0E61281FBCAE00F5476B /* AppDelegate.swift in Sources */,
 				F0A720362822C83000FCE055 /* CircularProgressBarView.swift in Sources */,
 				CB44B1BB2821796C00C6CE0F /* UIViewController+Extension.swift in Sources */,
