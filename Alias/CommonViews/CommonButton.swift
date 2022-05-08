@@ -46,13 +46,23 @@ class CommonButton: UIButton {
 private extension CommonButton {
     
     func setupView() {
-        setTitle(type?.rawValue, for: .normal)
+        guard let type = type else {
+            return
+        }
+        if let imageName = type.imageName {
+            let config = UIImage.SymbolConfiguration(pointSize: 40, weight: .bold)
+            let image = UIImage(systemName: imageName, withConfiguration: config)
+            setImage(image, for: .normal)
+            tintColor = .white
+        } else {
+            setTitle(type.rawValue, for: .normal)
+        }
+        backgroundColor = type.backgroundColor
         titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
-        backgroundColor = K.Color.secondaryInterfaceBackground
         layer.cornerRadius = K.Numeric.defaultCornerRadius
+        isEnabled = type != .continueGame
         addShadow()
         setupConstraints()
-        isEnabled = type != .continueGame
     }
     
     func setupConstraints() {

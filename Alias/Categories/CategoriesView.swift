@@ -79,22 +79,3 @@ private extension CategoriesView {
     }
     
 }
-
-//MARK: - SwiftUI
-//import SwiftUI
-//struct CompostitionalProvider: PreviewProvider {
-//    static var previews: some View {
-//        ContainterView().edgesIgnoringSafeArea(.all)
-//    }
-//
-//    struct ContainterView: UIViewControllerRepresentable {
-//
-//        let tabBar = CategoriesViewController()
-//        func makeUIViewController(context: UIViewControllerRepresentableContext<CompostitionalProvider.ContainterView>) -> CategoriesViewController {
-//            return tabBar
-//        }
-//
-//        func updateUIViewController(_ uiViewController: CompostitionalProvider.ContainterView.UIViewControllerType, context: UIViewControllerRepresentableContext<CompostitionalProvider.ContainterView>) {
-//        }
-//    }
-//}
