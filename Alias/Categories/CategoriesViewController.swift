@@ -9,9 +9,20 @@ import UIKit
 
 class CategoriesViewController: UIViewController {
     
-    var categories: [Category] = []
+    private var game: Game?
+    
+    private var categories: [Category] = []
     
     private let categoryView = CategoriesView()
+    
+    init(game: Game) {
+        self.game = game
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = categoryView
@@ -19,9 +30,10 @@ class CategoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        categories = game.getCategories()
+        categories = Category.getCategories()
         setupDelegates()
-        setCustomTitle(text: "ВЫБЕРИТЕ КАТЕГОРИИ СЛОВ")
+        setCustomTitle(text: "КАТЕГОРИИ СЛОВ")
+        setCustomBackButton()
     }
     
 }
@@ -39,19 +51,12 @@ private extension CategoriesViewController {
 extension CategoriesViewController: CategoriesViewDelegate {
     
     func didTapContinueButton() {
-        // Сбор списка выбранных категорий
-        var selectedCategories: [Category] = []
-        
-        for category in categories {
-            if category.isSelected {
-                selectedCategories.append(category)
-            }
+        guard let game = game else {
+            return
         }
-
-        game.setSelectedCategories(selectedCategories: selectedCategories)
-        
-        // Переход с CategoriesViewController на GameViewController
-        let nextViewController = GameViewController()
+        game.selectedCategories = categories.filter { $0.isSelected }
+        //MARK: Переход с CategoriesViewController на GameViewController
+        let nextViewController = GameViewController(game)
         navigationController?.pushViewController(nextViewController, animated: true)
     }
 }
@@ -59,6 +64,7 @@ extension CategoriesViewController: CategoriesViewDelegate {
 extension CategoriesViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         return categories.count
     }
     

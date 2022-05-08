@@ -9,42 +9,23 @@ import UIKit
 
 class MainMenuViewController: UIViewController {
     
-    let newGameButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = K.Color.primaryInterfaceBackground
-        button.layer.cornerRadius = 10
-        button.setTitle("Новая игра", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 30)
-      
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        return button
-    }()
+    private let mainMenuView = MainMenuView()
     
-    let rulesButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = K.Color.primaryInterfaceBackground
-        button.layer.cornerRadius = 10
-        button.setTitle("Правила", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 30)
-     
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        return button
-    }()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = K.Color.primaryInterfaceBackground
-        setupView()
+    override func loadView() {
+        mainMenuView.delegate = self
+        view = mainMenuView
     }
     
-    func setupView() {
-        view.addSubview(newGameButton)
-        view.addSubview(rulesButton)
-        
+}
+
+extension MainMenuViewController: MainMenuViewDelegate {
+    
+    func didTapNewGameButton() {
+        navigationController?.pushViewController(CategoriesViewController(game: Game()), animated: true)
+    }
+    
+    func didTapRulesButton() {
+        navigationController?.pushViewController(RulesViewController(), animated: true)
     }
     
 }

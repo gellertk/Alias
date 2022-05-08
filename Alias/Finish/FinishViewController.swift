@@ -9,7 +9,7 @@ import UIKit
 
 class FinishViewController: UIViewController {
     
-    var score: Int?
+    private var score: Int?
     
     private let finishView = FinishView()
     
@@ -21,10 +21,7 @@ class FinishViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getJoke()
-        guard let score = score else {
-            return
-        }
-        finishView.setupScoreLabel(score: score)
+        finishView.setupScoreLabel(score: score ?? 0)
     }
     
     init(score: Int) {

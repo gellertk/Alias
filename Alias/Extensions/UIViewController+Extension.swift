@@ -18,5 +18,15 @@ extension UIViewController {
         
         navigationItem.titleView = label
     }
+    
+    func setCustomBackButton() {
+        let config = UIImage.SymbolConfiguration(weight: .bold)
+        let image = UIImage(systemName: "arrow.uturn.backward", withConfiguration: config)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(popToViewController))
+    }
+    
+    @objc func popToViewController() {
+        navigationController?.popViewController(animated: true)
+    }
 
 }

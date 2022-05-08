@@ -18,6 +18,7 @@ class MainNavigationController: UINavigationController {
         navigationBar.isTranslucent = false
         navigationBar.barTintColor = K.Color.primaryInterfaceBackground
         view.backgroundColor = K.Color.primaryInterfaceBackground
+        view.tintColor = .white
     }
     
 }

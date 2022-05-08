@@ -9,6 +9,13 @@ import UIKit
 
 extension UIView {
     
+    func addSubviews(_ views: [UIView]) {
+        views.forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            addSubview($0)
+        }
+    }
+    
     func shrink(direction: ShrinkDirection) {
         UIView.animate(withDuration: 0.1, delay: 0.0, options: [.allowUserInteraction]) {
             self.transform = direction == ShrinkDirection.down ? CGAffineTransform(scaleX: 0.95, y: 0.95) : .identity

@@ -24,6 +24,7 @@ class CategoriesCollectionViewCell: UICollectionViewCell {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
+        imageView.layer.masksToBounds = true
         
         return imageView
     }()
@@ -82,7 +83,6 @@ class CategoriesCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         checkmarkImageView.layer.cornerRadius = checkmarkImageView.bounds.width / 2
         imageView.layer.cornerRadius = K.Numeric.defaultCornerRadius
-        imageView.layer.masksToBounds = true
     }
     
 }

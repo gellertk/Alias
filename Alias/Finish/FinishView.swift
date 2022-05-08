@@ -88,7 +88,7 @@ private extension FinishView {
 
             newGameButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             newGameButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            newGameButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            newGameButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
     }
     
