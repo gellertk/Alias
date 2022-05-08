@@ -1,5 +1,5 @@
 
-# Alias game
+# Alias game (team project)
 
 * No Storyboard
 * MVC
